@@ -1,4 +1,5 @@
 import excecoes.amigo.AmigoInexistenteException;
+import excecoes.amigo.AmigoJaExisteException;
 import excecoes.amigo.AmigoNaoSorteadoException;
 
 import java.util.ArrayList;
@@ -23,7 +24,22 @@ public class SistemaAmigo {
         this.amigos = new ArrayList<>();
     }
 
-    public void cadastraAmigos(String nomeAmigo, String emailAmigo){
+    public Amigo pesquisaAmigo(String email)throws AmigoInexistenteException{
+        if(amigos.isEmpty()) throw new AmigoInexistenteException("O amigo não existe no sistema!");
+        else for(Amigo a: amigos){
+            if(a.getEmail().equalsIgnoreCase(email)){
+                return a;
+            }
+        }
+        throw new AmigoInexistenteException("O amigo não existe no sistema!");
+    }
+
+    public void cadastraAmigo(String nomeAmigo, String emailAmigo)throws AmigoJaExisteException {
+        for(Amigo a:amigos){
+            if(a.getNome().equalsIgnoreCase(nomeAmigo) && a.getEmail().equalsIgnoreCase(emailAmigo)){
+                throw new AmigoJaExisteException("O amigo já existe no sistema");
+            }
+        }
         amigos.add(new Amigo(nomeAmigo, emailAmigo, null));
     }
 

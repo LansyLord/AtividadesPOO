@@ -1,4 +1,5 @@
 import excecoes.amigo.AmigoInexistenteException;
+import excecoes.amigo.AmigoJaExisteException;
 import excecoes.amigo.AmigoNaoSorteadoException;
 
 import javax.swing.*;
@@ -10,8 +11,13 @@ public class TestaSistemaAmigo {
         Amigo maria = new Amigo("Maria", "maria@gmail.com", null);
 
         SistemaAmigo sistema = new SistemaAmigo();
-        sistema.cadastraAmigos(jose.getNome(), jose.getEmail());
-        sistema.cadastraAmigos(maria.getNome(), maria.getEmail());
+        try{
+            sistema.cadastraAmigo(jose.getNome(), jose.getEmail());
+            sistema.cadastraAmigo(maria.getNome(), maria.getEmail());
+        }catch(AmigoJaExisteException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
 
         try{
             sistema.configuraAmigoSecretoDe("jose@gmail.com","maria@gmail.com");

@@ -1,4 +1,5 @@
 import excecoes.amigo.AmigoInexistenteException;
+import excecoes.amigo.AmigoJaExisteException;
 
 import javax.swing.*;
 
@@ -16,7 +17,11 @@ public class TestaSistemaAmigoGUI {
             String nome = JOptionPane.showInputDialog(null, "Insira o nome do "+ (i+1) + "° amigo");
             String email = JOptionPane.showInputDialog(null, "Insira o email do "+ (i+1) + "° amigo");
 
-            sistema.cadastraAmigos(nome, email);
+            try{
+                sistema.cadastraAmigo(nome, email);
+            }catch (AmigoJaExisteException e){
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
         }
 
         for(Amigo a: sistema.getAmigos()){
